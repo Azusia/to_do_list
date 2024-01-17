@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>To do list</title>
+</head>
+<body>
+    <div id="lewaStrona">
+        <h2 id="z">Zakupy</h2>
+        <input type="text" id="nowyElementInputZakupy" placeholder="Wpisz nwą pozycje" onkeypress="handleKeyPress(event, 'Zakupy')">
+        <button type="button" onclick="dodajElement('Zakupy')">Dodaj</button>
+        <button type="button" onclick="wyczyscOstatniElement('Zakupy')">Wyczyść</button>
+        <ul id="listaZakupy"></ul>
+    </div>
+
+    <div id="prawaStrona">
+        <h2 id="c">Cele</h2>
+        <input type="text" id="nowyElementInputCele" placeholder="Wpisz nowy cel" onkeypress="handleKeyPress(event, 'Cele')">
+        <button type="button" onclick="dodajElement('Cele')">Dodaj</button>
+        <button type="button" onclick="wyczyscOstatniElement('Cele')">Wyczyść</button>
+        <ul id="listaCele"></ul>
+    </div>
+
+    <button id="przewinDoGory" onclick="przewinDoGory()">Up</button>
+
+    <footer><p>Witaj, jest to strona stworzona z myślą planowania i organizacji. 
+        Możesz wpisywac nowe pozycje i zatwierdzać je przyciskiem lub klawiszem Enter.
+         Jeśli pomylisz się, nie ma problemu! Usuń ostanio wpisana pozycje przyciskiem Wyczyść. 
+         Wykonała:  Joanna Mazur</p></footer>
+    
+    <script>
+        function dodajElement(idListy) {
+            console.log("dodanie elementu listy:", idListy);
+            var nowyElementInput = document.getElementById('nowyElementInput' + idListy);
+
+            if (nowyElementInput) {
+                var nowyTekst = nowyElementInput.value;
+
+                if (nowyTekst.trim() !== "") {
+                    var lista = document.getElementById('lista' + idListy);
+
+                    if (lista) {
+                        var nowyElement = document.createElement("li");
+                        nowyElement.textContent = nowyTekst;
+                        lista.appendChild(nowyElement);
+                        nowyElementInput.value = "";
+                    } else {
+                        console.error("Element listy nie został znaleziony.");
+                    }
+                }
+            } else {
+                console.error("Input nie został znaleziony.");
+            }
+        }
+        function wyczyscOstatniElement(idListy) {
+            var lista = document.getElementById('lista' + idListy);
+            var ostatniElement = lista.lastElementChild;
+
+            if (ostatniElement) {
+                lista.removeChild(ostatniElement);
+            }
+        }
+        function handleKeyPress(event,idListy){
+            if(event.keyCode === 13){
+                dodajElement(idListy);
+            }
+        }
+        function przewinDoGory() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
